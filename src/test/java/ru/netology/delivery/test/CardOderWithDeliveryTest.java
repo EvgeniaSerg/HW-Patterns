@@ -6,8 +6,8 @@ import org.openqa.selenium.Keys;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -40,9 +40,9 @@ public class CardOderWithDeliveryTest {
                     .shouldBe(visible);
             $(("[data-test-id='date'] input")).sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), (Keys.DELETE));
             $("[data-test-id=date] input").setValue(secondMeetingDate);
-            $("button.button").click();
-            $("[data-test-id=replan-notification] .notification__content")
-                    .shouldHave(exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"))
+            $(byText("Запланировать")).click();
+            $("[data-test-id='replan-notification'] .notification__content")
+                    .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"))
                     .shouldBe(visible);
             $("[data-test-id=replan-notification] button.button").click();
             $("[data-test-id=success-notification]").shouldBe(visible, Duration.ofSeconds(15));
